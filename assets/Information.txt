@@ -1,0 +1,20 @@
+==========================================================
+Steps
+==========================================================
+
+1. Install Git
+Download & install
+
+2. Install Python 2.7 & Pip is automatically installed in Scripts Forlder in Python
+Download & install
+
+3. Add Python & Pip to Environment Variables
+Manully
+
+4. Install Selenium & Check Availability
+pip install selenium
+pip list | grep selenium
+5. npm install -g appium-doctor
+
+
+6. npm install appium-uiautomator2-driver
