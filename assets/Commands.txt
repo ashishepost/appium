@@ -1,4 +1,8 @@
 ==========================================================
 Start Appiuim Server
 ==========================================================
+@Previous
 appium --address 127.0.0.1 --port 4723 --platform-name Android --platform-version 23 --automation-name Appium --device-name "192.168.25.101:5555"
+
+@Latest
+appium --address 127.0.0.1 --port 4723 --platformName Android --platformVersion 23 --automationName Appium --deviceName "192.168.25.101:5555"

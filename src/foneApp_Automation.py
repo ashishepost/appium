@@ -16,6 +16,7 @@ from selenium.common.exceptions import NoSuchElementException
 
 # Custom Libraries
 import foneapp_module as FAM
+import foneAppElementList as fAppElmnts
 
 
 class FoneAppAutomation():
@@ -40,34 +41,40 @@ class FoneAppAutomation():
             pass
 
     # Automate User Registration Page
-    def testSignUp(self, userDetails):
-        # All Reference ID Decelerations
-        elmntSignUpBtnRID = 'com.clearfly.groupfone:id/tvSignUp'
+    def testSignUp(self, simulationData, elmntDetails):
+
+        elmntSignUpBtnRID = elmntDetails['pkgElements'][6]['resourceID']
 
         elmntSignUpBtn = self.uIElementExist(elmntSignUpBtnRID)
         if elmntSignUpBtn != None:
-            # print(elmntSignUpButton)
+            # Simulate Click on Sign Up
             elmntSignUpBtn.click()
+
+
         else:
             print(self.prefixDash('Element ' + elmntSignUpBtnRID + ' Not Present'))
             return
 
-        # Automate Agreement Page
-        def testAgreement(self):
-            # All Reference ID Decelerations
-            elmntTermsNCndtnTxtVwRID = 'com.clearfly.groupfone:id/tv_terms_conditions'
-            elmntAgreeBtnVwRID = 'com.clearfly.groupfone:id/btnAgreement'
+    # Automate Agreement Page
+    def testAgreement(self, simulationData, elmntDetails):
+        # All Reference ID Decelerations
+        elmntTermsNCndtnTxtVwRID = 'com.clearfly.groupfone:id/tv_terms_conditions'
+        elmntAgreeBtnVwRID = 'com.clearfly.groupfone:id/btnAgreement'
 
-            elmnTermsNCndtnBtn = self.uIElementExist(elmntTermsNCndtnTxtVwRID)
-            if elmnTermsNCndtnBtn != None:
-                elmnTermsNCndtnBtn.click()
-            else:
-                print(self.prefixDash('Element ' + elmntTermsNCndtnTxtVwRID + ' Not Present'))
-                return
-                # exit(1)
+        elmnTermsNCndtnBtn = self.uIElementExist(elmntTermsNCndtnTxtVwRID)
+        if elmnTermsNCndtnBtn != None:
+            elmnTermsNCndtnBtn.click()
+        else:
+            print(self.prefixDash('Element ' + elmntTermsNCndtnTxtVwRID + ' Not Present'))
+            return
+            # exit(1)
+
+    def testFAppEnablePermissions(self, simulationData, elmntDetails):
+        pass
+
 
     # Automate User Login Page
-    def testLogin(self, userCredentials):
+    def testLogin(self, simulationData, elmntDetails):
         pass
 
     # Check Element Existence in User Interface
@@ -93,7 +100,7 @@ class FoneAppAutomation():
 
         if elementResourceID != None:
             print(self.prefixDash('Element ' + elementResourceID + ' Not Present'))
-            print("Please Check for Element Existence Manually then continue script accordingly")
+            print("Please Check for Element Existence Manually & continue script accordingly")
 
             while self.userInput != "y" or self.userInput != "n":
                 self.userInput = raw_input("Press 'y' to continue or 'n' to exit Execution: ")
@@ -107,23 +114,26 @@ class FoneAppAutomation():
             print(self.prefixDash('No Element is Passed to Continue Script'))
             return False
 
-    def fAppModuleExecuter(self, ModuleName, data):
+    def fAppModuleExecuter(self, ModuleName, simulationData=None, elmntDetails=None):
         def moduleNotFound():
             print "No Module Found named with " + ModuleName
             return False
 
-        func = getattr(self, ModuleName, moduleNotFound)(data)
+        func = getattr(self, ModuleName, moduleNotFound)(simulationData, elmntDetails)
 
     # Dummy Method to Test Class Things
-    def fAppDummy(self, dummyData):
-        print('Dummy Test Quiting Automation')
+    def fAppDummy(self, simulationData, elmntDetails):
+        print('Dummy Test Starting Automation')
+        print(simulationData, elmntDetails)
+
+        # Dummy Module
         exit(1)
 
 
 # ======Automation Section Start======
 
 # Get Driver Object
-fAppAuto = FoneAppAutomation({'appPath': 'C:\\Users\\ashish.t\\PycharmProjects\\Appium\\Appium_python\\apk\\',
+fAppPixel = FoneAppAutomation({'appPath': 'C:\\Users\\ashish.t\\PycharmProjects\\Appium\\Appium_python\\apk\\',
                               'appName': 'app-release-02112018.apk',
                               'platformName': 'Android',
                               'platformVersion': '7.1.1',
@@ -132,31 +142,40 @@ fAppAuto = FoneAppAutomation({'appPath': 'C:\\Users\\ashish.t\\PycharmProjects\\
                               'appActivity': 'com.clearfly.app.mvp.splash.SplashActivity'
                               })
 
-
 # List of All Modules with Data to be Executed.
 # Note:Just Comment out to Exclude Module
-fAppModules = OrderedDict([
+fAppModules = [
     # Activate Dummy Section
-    # ('fAppDummy', {'dummyData': 'Amit'
-    #                }),
+    # {'moduleName': 'fAppDummy',
+    #  'simulationData': {'dummyData': 'Nothing Serious'
+    #                     },
+    #  'elmntDetails': fAppElmnts.ElementsDetails['appEnablePermissionPkg']},
+
+    # Activate Enable Permission Section
+    # {'moduleName': 'testFAppEnablePermissions',
+    #  'simulationData': None,
+    #  'elmntDetails': fAppElmnts.ElementsDetails['appEnablePermissionPkg']},
 
     # Activate SignUp Section
-    ('testSignUp', {'firstName': 'Amit',
-                    'lastName': 'Pant',
-                    'Country': 'India',
-                    'Mobile': '9993994107'
-                    }),
-
-    # Activate Login Section
-    # ('testLogin', {'username': '9999394017',
-    #               'password': '123456',
-    #               'email': 'amit@gmail.com',
-    #               'withEmail': False
-    #               })
-
-])
+    {'moduleName': 'testSignUp',
+     'simulationData': {'firstName': 'Amit',
+                        'lastName': 'Pant',
+                        'Country': 'India',
+                        'Mobile': '9993994107'
+                        },
+     'elmntDetails': fAppElmnts.ElementsDetails['loginNSignUpPkg']},
+    #
+    # # Activate Login Section
+    # {'moduleName': 'testLogin',
+    #  'simulationData': {'username': '9999394017',
+    #                     'password': '123456',
+    #                     'email': 'amit@gmail.com',
+    #                     'withEmail': False
+    #                     },
+    #  'elmntDetails': fAppElmnts.ElementsDetails['appEnablePermissionPkg']}
+]
 
 # Executing All Fone App Modules
-for fAppModule, data in fAppModules.items():
-    print(fAppAuto.prefixDash('Automating ' + fAppModule + ' Module'))
-    fAppAuto.fAppModuleExecuter(fAppModule, data)
+for module in fAppModules:
+    print(fAppPixel.prefixDash('Automating ' + module['moduleName'] + ' Module'))
+    fAppPixel.fAppModuleExecuter(module['moduleName'], module['simulationData'], module['elmntDetails'])

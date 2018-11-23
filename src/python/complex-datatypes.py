@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 ElementsDetails = \
     {
         # Common to all Elements
@@ -171,43 +173,53 @@ ElementsDetails = \
         }
     }
 
-blankTemplate = \
-    {'appPermissionsPkg': {
-        'multipleTimes': False,
-        'pkgName': '',
-        'pkgClassName': '',
-        'screenshotFileName': '',
-        'pkgElements': {
-            0: {
-                'class': '',
-                'resourceID': '',
-                'text': '',
-                'gesture': None,
-                'reaction': None
-            },
-            1: {
-                'class': '',
-                'resourceID': '',
-                'text': '',
-                'gesture': None,
-                'reaction': None
-            },
-            2: {
-                'class': '',
-                'resourceID': '',
-                'text': '',
-                'gesture': None,
-                'reaction': None
-            },
-            3: {
-                'class': '',
-                'resourceID': '',
-                'text': '',
-                'gesture': None,
-                'reaction': None
-            }
 
-        }
+def fAppModuleExecuter(self, ModuleName, data=None, elementsRID=None):
+    def moduleNotFound():
+        print "No Module Found named with " + ModuleName
+        return False
 
-    }
-    }
+    func = getattr(self, ModuleName, moduleNotFound)(data, elementsRID)
+
+
+fAppModules = [
+    # Activate Dummy Section
+    {'moduleName': 'fAppDummy',
+     'simulationData': {'dummyData': 'Nothing Serious'
+                        },
+     'elmntsRef': ElementsDetails['appEnablePermissionPkg']},
+
+    # Activate SignUp Section
+    {'moduleName': 'testSignUp',
+     'simulationData': {'firstName': 'Amit',
+                        'lastName': 'Pant',
+                        'Country': 'India',
+                        'Mobile': '9993994107'
+                        },
+     'elmntsRef': ElementsDetails['appPermissionsPkg']},
+
+    # Activate Login Section
+    {'moduleName': 'testLogin',
+     'simulationData': {'username': '9999394017',
+                        'password': '123456',
+                        'email': 'amit@gmail.com',
+                        'withEmail': False
+                        },
+     'elmntsRef': ElementsDetails['appEnablePermissionPkg']}
+]
+
+# for fAppModule, data in fAppModules.items():
+#     print(type(fAppModule))
+
+elmnt = ElementsDetails['loginNSignUpPkg']['pkgElements'][6]['resourceID']
+
+print(elmnt)
+
+for module in  fAppModules:
+    print(module['moduleName'])
+
+# fAppModuleExecuter(fAppModule, data, elements)
+
+# print(ElementsDetails.__getitem__('appEnablePermissionPkg'))
+# for m in ElementsDetails['appEnablePermissionPkg'].items():
+#     print(m)
