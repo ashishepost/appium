@@ -1,18 +1,22 @@
 ElementsDetails = \
     {
-        # Common to all Elements
+        # ========= Common to all Modules Section =========
+
+        # Root Path to Screenshots Folder
         'screenshotsBasePath': 'C:\\Users\\ashish.t\\PycharmProjects\\Appium\\Appium_python\\Assets\\elements-screenshots\\',
 
-        # End of Common Elements
+        # Dummy Module which has implemented jot to test connectivity
+        'dummyModule': {'dummyData': 'Dummy Data no Use'},
+        # ========= End of Common to all Modules Section =========
 
         # Application Level Permission
-        'appEnablePermissionPkg': {
+        'appEnablePermissionModule': {
             'multipleTimes': False,
             'pkgName': 'com.clearfly.groupfone',
             'pkgClassName': 'android.widget.FrameLayout',
             'imageSubPath': 'appEnablePermission' + '\\',
             'screenshotFileName': '2018-11-15_8-50-24.png',
-            'pkgElements': {
+            'UIElements': {
                 0: {
                     'class': 'android.widget.TextView',
                     'resourceID': 'com.clearfly.groupfone:id/snackbar_text',
@@ -29,13 +33,13 @@ ElementsDetails = \
                 }
             }
         },
-        'appPermissionsPkg': {
+        'appGrantPermissionDialogs': {
             'multipleTimes': True,
             'pkgName': 'com.android.packageinstaller',
             'pkgClassName': 'com.android.packageinstaller',
             'imageSubPath': 'appEnablePermission' + '\\',
             'screenshotFileName': '2018-11-15_8-51-24.png',
-            'pkgElements': {
+            'UIElements': {
                 0: {
                     'class': 'android.widget.TextView',
                     'resourceID': 'com.android.packageinstaller:id/permission_message',
@@ -71,26 +75,30 @@ ElementsDetails = \
 
             }
         },
-        'loginNSignUpPkg': {
-            'multipleTimes': False,
+
+        # Sign Process UI Page Elements Details
+        'loginModule': {
+            'isProcess': False,
             'pkgName': 'com.clearfly.groupfone',
             'pkgClassName': 'android.widget.ScrollView',
-            'imageSubPath': 'loginNSignUp' + '\\',
+            'sourcePage': 'appModule',
+            'actionElmntIndex': None,
+            'imageSubPath': 'loginModule' + '\\',
             'screenshotFileName': '2018-11-15_8-53-24.png',
-            'pkgElements': {
+            'UIElements': {
                 0: {
                     'class': 'android.widget.TextView',
                     'resourceID': 'com.clearfly.groupfone:id/tvIsdCode',
                     'text': '+1',
-                    'gesture': None,
-                    'reaction': None
+                    'gesture': 'tap',
+                    'reaction': 'select-text'
                 },
                 1: {
                     'class': 'android.widget.EditText',
                     'resourceID': 'com.clearfly.groupfone:id/edtPhoneNumber',
                     'text': 'Phone Number',
-                    'gesture': None,
-                    'reaction': None
+                    'gesture': 'tap',
+                    'reaction': 'edit-text'
                 },
                 2: {
                     'class': 'android.widget.TextView',
@@ -103,111 +111,112 @@ ElementsDetails = \
                     'class': 'android.widget.EditText',
                     'resourceID': 'com.clearfly.groupfone:id/edtEmail',
                     'text': 'Email',
-                    'gesture': None,
-                    'reaction': None
+                    'gesture': 'tap',
+                    'reaction': 'edit-text'
                 },
                 4: {
                     'class': 'android.widget.EditText',
                     'resourceID': 'com.clearfly.groupfone:id/edtPassword',
                     'text': 'Password',
-                    'gesture': None,
-                    'reaction': None
+                    'gesture': 'tap',
+                    'reaction': 'edit-text'
                 },
                 5: {
                     'class': 'android.widget.Button',
                     'resourceID': 'com.clearfly.groupfone:id/tvLogin',
                     'text': 'LOGIN',
-                    'gesture': None,
-                    'reaction': None
+                    'gesture': 'tap',
+                    'reaction': 'new-page'
                 },
                 6: {
                     'class': 'android.widget.Button',
                     'resourceID': 'com.clearfly.groupfone:id/tvSignUp',
                     'text': 'SIGN UP',
-                    'gesture': None,
-                    'reaction': None
+                    'gesture': 'tap',
+                    'reaction': 'new-process'
                 },
                 7: {
                     'class': 'android.widget.TextView',
                     'resourceID': 'com.clearfly.groupfone:id/tvForgotPassword',
                     'text': 'Forgot Password?',
-                    'gesture': None,
-                    'reaction': None
+                    'gesture': 'tap',
+                    'reaction': 'new-process'
                 }
             }
-
         },
-        'agreementPkg': {
-            'multipleTimes': False,
-            'pkgName': 'com.clearfly.groupfone',
-            'pkgClassName': 'android.widget.FrameLayout',
-            'imageSubPath': 'loginNSignUp' + '\\',
-            'screenshotFileName': '2018-11-15_8-54-24.png',
-            'pkgElements': {
-                0: {
-                    'class': 'android.widget.TextView',
-                    'resourceID': None,
-                    'text': 'Welcome To',
-                    'gesture': None,
-                    'reaction': None
-                },
-                1: {
-                    'class': 'android.widget.TextView',
-                    'resourceID': 'com.clearfly.groupfone:id/tv_terms_conditions',
-                    'text': 'Terms & Conditions',
-                    'gesture': None,
-                    'reaction': None
-                },
-                2: {
-                    'class': 'android.widget.Button',
-                    'resourceID': 'com.clearfly.groupfone:id/btnAgreement',
-                    'text': 'I Agree & Continue',
-                    'gesture': None,
-                    'reaction': None
+
+        # Sign Process UI Page Elements Details
+        'signUpModule': {
+            'isProcess': True,
+            'sourcePage': 'loginModule',
+            'actionElmntIndex': 6,
+            'imageSubPath': 'signUpModule' + '\\',
+            'screenshotFileName': None,
+            'UIPages': [
+                {
+                    'agreementPageElmnts': {
+                        'pkgName': 'com.clearfly.groupfone',
+                        'pkgClassName': 'android.widget.FrameLayout',
+                        'screenshotFileName': '2018-11-15_8-54-24.png',
+                        'UIElements': {
+                            0: {
+                                'class': 'android.widget.TextView',
+                                'resourceID': None,
+                                'text': 'Welcome To',
+                                'gesture': None,
+                                'reaction': None
+                            },
+                            1: {
+                                'class': 'android.widget.TextView',
+                                'resourceID': 'com.clearfly.groupfone:id/tv_terms_conditions',
+                                'text': 'Terms & Conditions',
+                                'gesture': None,
+                                'reaction': None
+                            },
+                            2: {
+                                'class': 'android.widget.Button',
+                                'resourceID': 'com.clearfly.groupfone:id/btnAgreement',
+                                'text': 'I Agree & Continue',
+                                'gesture': None,
+                                'reaction': None
+                            }
+
+                        }
+
+                    },
+                    'registerPageElmnts': {
+                        'pkgName': 'com.clearfly.groupfone',
+                        'pkgClassName': 'android.widget.FrameLayout',
+                        'screenshotFileName': '2018-11-15_8-54-24.png',
+                        'UIElements': {
+                            0: {
+                                'class': 'android.widget.TextView',
+                                'resourceID': None,
+                                'text': 'Welcome To',
+                                'gesture': None,
+                                'reaction': None
+                            },
+                            1: {
+                                'class': 'android.widget.TextView',
+                                'resourceID': 'com.clearfly.groupfone:id/tv_terms_conditions',
+                                'text': 'Terms & Conditions',
+                                'gesture': None,
+                                'reaction': None
+                            },
+                            2: {
+                                'class': 'android.widget.Button',
+                                'resourceID': 'com.clearfly.groupfone:id/btnAgreement',
+                                'text': 'I Agree & Continue',
+                                'gesture': None,
+                                'reaction': None
+                            }
+
+                        }
+
+                    }
                 }
-
-            }
-
-        }
-    }
-
-blankTemplate = \
-    {'appPermissionsPkg': {
-        'multipleTimes': False,
-        'pkgName': '',
-        'pkgClassName': '',
-        'screenshotFileName': '',
-        'pkgElements': {
-            0: {
-                'class': '',
-                'resourceID': '',
-                'text': '',
-                'gesture': None,
-                'reaction': None
-            },
-            1: {
-                'class': '',
-                'resourceID': '',
-                'text': '',
-                'gesture': None,
-                'reaction': None
-            },
-            2: {
-                'class': '',
-                'resourceID': '',
-                'text': '',
-                'gesture': None,
-                'reaction': None
-            },
-            3: {
-                'class': '',
-                'resourceID': '',
-                'text': '',
-                'gesture': None,
-                'reaction': None
-            }
+            ]
 
         }
 
-    }
     }

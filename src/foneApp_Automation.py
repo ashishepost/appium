@@ -50,7 +50,10 @@ class FoneAppAutomation():
             # Simulate Click on Sign Up
             elmntSignUpBtn.click()
 
-
+            # Check if Enable Permission Snackbar Present
+            elmntEnablePermissionBtn = self.uIElementExist(fAppElmnts.ElementsDetails['appEnablePermissionPkg']['pkgElements'][1]['resourceID'])
+            if elmntEnablePermissionBtn != None:
+                elmntEnablePermissionBtn.click()
         else:
             print(self.prefixDash('Element ' + elmntSignUpBtnRID + ' Not Present'))
             return
@@ -146,36 +149,41 @@ fAppPixel = FoneAppAutomation({'appPath': 'C:\\Users\\ashish.t\\PycharmProjects\
 # Note:Just Comment out to Exclude Module
 fAppModules = [
     # Activate Dummy Section
-    # {'moduleName': 'fAppDummy',
+    # {'testName': 'testDummyModule',
     #  'simulationData': {'dummyData': 'Nothing Serious'
     #                     },
-    #  'elmntDetails': fAppElmnts.ElementsDetails['appEnablePermissionPkg']},
+    #  'moduleDetails': fAppElmnts.ElementsDetails['dummyModule']},
 
-    # Activate Enable Permission Section
-    # {'moduleName': 'testFAppEnablePermissions',
+    # Activate Enable Permission
+    # {'testName': 'testAppEnablePermissionDialog',
     #  'simulationData': None,
-    #  'elmntDetails': fAppElmnts.ElementsDetails['appEnablePermissionPkg']},
+    #  'moduleDetails': fAppElmnts.ElementsDetails['appEnablePermissionDialog']},
 
-    # Activate SignUp Section
-    {'moduleName': 'testSignUp',
+    # Enable Application Permissions
+    # {'testName': 'testAppGrantPermissionDialogs',
+    #  'simulationData': None,
+    #  'moduleDetails': fAppElmnts.ElementsDetails['appGrantPermissionDialogs']},
+
+    # Activate SignUp
+    {'testName': 'testSignUpModule',
      'simulationData': {'firstName': 'Amit',
                         'lastName': 'Pant',
                         'Country': 'India',
                         'Mobile': '9993994107'
                         },
-     'elmntDetails': fAppElmnts.ElementsDetails['loginNSignUpPkg']},
-    #
-    # # Activate Login Section
-    # {'moduleName': 'testLogin',
+     'moduleDetails': fAppElmnts.ElementsDetails['signUpModule']},
+
+    # Activate Login
+    # {'moduleName': 'testLoginModule',
     #  'simulationData': {'username': '9999394017',
     #                     'password': '123456',
     #                     'email': 'amit@gmail.com',
     #                     'withEmail': False
     #                     },
-    #  'elmntDetails': fAppElmnts.ElementsDetails['appEnablePermissionPkg']}
+    #  'moduleDetails': fAppElmnts.ElementsDetails['loginModule']}
 ]
 
-# Executing All Fone App Modules
+# Executing All FoneApp Application Tests
 for module in fAppModules:
-    print(fAppPixel.prefixDash('Automating ' + module['moduleName'] + ' Module'))
-    fAppPixel.fAppModuleExecuter(module['moduleName'], module['simulationData'], module['elmntDetails'])
+    print(fAppPixel.prefixDash('Automating ' + module['testName'] + ' Module'))
+    fAppPixel.fAppModuleExecuter(module['testName'], module['simulationData'], module['moduleDetails'])
