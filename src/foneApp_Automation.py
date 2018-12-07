@@ -94,6 +94,16 @@ class FoneAppAutomation():
                     return None
             else:
                 return elementRefrence
+    # Get Source Page Element
+    def sourcePageElmnt(sourcePage, actionElmntIndex, subPage=None):
+    # Check if UI is Process based or Not
+
+        if fAppElmnts.ElementsDetails[sourcePage]['isProcess']:
+            if isinstance(fAppElmnts.ElementsDetails[sourcePage]['UIPages'], list):
+                return max(fAppElmnts.ElementsDetails[sourcePage]['UIPages'])[subPage]['UIElements'][actionElmntIndex]['resourceID']
+        else:
+            if isinstance(fAppElmnts.ElementsDetails[sourcePage]['UIElements'], dict):
+                return fAppElmnts.ElementsDetails[sourcePage]['UIElements'][actionElmntIndex]['resourceID']
 
     def prefixDash(self, value):
         stringPrefix = '----'
